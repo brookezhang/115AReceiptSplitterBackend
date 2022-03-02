@@ -5,7 +5,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def hello_world():
-    return json.dumps("Hello World!")
+    return json.dumps("TabDrop Backend!")
 
 @app.route('/items', methods=['GET','POST'])
 def items():
