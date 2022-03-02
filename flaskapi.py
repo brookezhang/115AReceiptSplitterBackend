@@ -1,5 +1,5 @@
 from flask import Flask, request
-from AzureReceiptRec import AzureReceipt
+from azurereceiptrec import AzureReceipt
 import json
 app = Flask(__name__)
 
