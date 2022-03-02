@@ -8,7 +8,7 @@ from azure.core.credentials import AzureKeyCredential
 from azure.ai.formrecognizer import FormTrainingClient
 from azure.ai.formrecognizer import FormRecognizerClient
 
-class AzureReceipt:
+class RecieptOcr:
     def __init__(self):
         pass
 
