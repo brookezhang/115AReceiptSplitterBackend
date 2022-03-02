@@ -1,13 +1,13 @@
 from flask import Flask, request
 from AzureReceiptRec import AzureReceipt
 import json
-application = Flask(__name__)
+app = Flask(__name__)
 
-@application.route('/')
+@app.route('/')
 def hello_world():
     return json.dumps("Hello World!")
 
-@application.route('/items', methods=['GET','POST'])
+@app.route('/items', methods=['GET','POST'])
 def items():
     reciept = request.json
     imgStr = reciept["base64"]
