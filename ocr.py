@@ -8,7 +8,7 @@ from azure.core.credentials import AzureKeyCredential
 from azure.ai.formrecognizer import FormTrainingClient
 from azure.ai.formrecognizer import FormRecognizerClient
 
-class RecieptOcr:
+class ReceiptOcr:
     def __init__(self):
         pass
 
@@ -91,10 +91,8 @@ class RecieptOcr:
         else:
             return json.dumps(items_l)
 
-if __name__ == '__main__':
-    img_data = json.load(open('./receipt.json'))
-    r = AzureReceipt()
-    t = r.get(img_data['img_string'])
-    print(t)
-
-    
+# if __name__ == '__main__':
+#     img_data = json.load(open('./receipt.json'))
+#     ocrObj = ReceiptOcr()
+#     foundItems = ocrObj.get(img_data['img_string'])
+#     print(foundItems)

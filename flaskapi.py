@@ -1,5 +1,5 @@
 from flask import Flask, request
-from ocr import RecieptOcr
+from ocr import ReceiptOcr
 import json
 app = Flask(__name__)
 
@@ -11,9 +11,9 @@ def hello_world():
 def items():
     reciept = request.json
     imgStr = reciept["base64"]
-    r = AzureReceipt()
-    t = r.get(imgStr)
-    if t == 'Error':
+    ocrObj = ReceiptOcr()
+    foundItems = ocrObj.get(imgStr)
+    if foundItems == 'Error':
         return json.dumps("Error"), 400
     else:
-        return t, 200
+        return foundItems, 200
