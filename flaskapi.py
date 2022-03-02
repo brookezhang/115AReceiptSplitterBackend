@@ -13,4 +13,6 @@ def get_items():
         return json.dumps("Error"), 400
     else:
         return t, 200
+if __name__ == '__main__':
+    app.run(threaded=True, port=500)
 
