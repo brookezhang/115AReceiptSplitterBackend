@@ -13,7 +13,6 @@ def items():
     imgStr = reciept["base64"]
     r = AzureReceipt()
     t = r.get(imgStr)
-    print(t)
     if t == 'Error':
         return json.dumps("Error"), 400
     else:
