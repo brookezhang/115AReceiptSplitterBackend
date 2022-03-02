@@ -1,5 +1,5 @@
 from flask import Flask, request
-from ocr import AzureReceipt
+from ocr import RecieptOcr
 import json
 app = Flask(__name__)
 
