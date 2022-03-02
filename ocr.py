@@ -9,9 +9,6 @@ from azure.ai.formrecognizer import FormTrainingClient
 from azure.ai.formrecognizer import FormRecognizerClient
 
 class ReceiptOcr:
-    def __init__(self):
-        pass
-
     # sets up credentials for Azure api
     # input: NONE 
     # output: azure api object 
@@ -86,7 +83,7 @@ class ReceiptOcr:
         return item_list
     
     # gets receipt image data and parses it 
-    def get(self, img_str):
+    def get_ocr(self, img_str):
         form_recognizer_client = self.get_credentials()
         receipt = self.get_receipt(img_str) # make b64 string into img file
         items_l = self.parse_receipt(receipt, form_recognizer_client) # run azure api over receipt and return item list
