@@ -3,9 +3,7 @@ import base64
 import os
 from dotenv import load_dotenv
 from flask import Flask, request
-from azure.core.exceptions import ResourceNotFoundError
 from azure.core.credentials import AzureKeyCredential
-from azure.ai.formrecognizer import FormTrainingClient
 from azure.ai.formrecognizer import FormRecognizerClient
 
 class ReceiptOcr:
@@ -42,11 +40,13 @@ class ReceiptOcr:
         item_list = [] # dictionary to hold receipt items and their values
 
         # loop through list to print and add to list
+
+        
         for idx, receipt in enumerate(receipts):
             if not receipt.fields: 
-                return 'error'
+                return 'Error'
             if receipt.fields.get('Items'):
-                for idx, item in enumerate(receipt.fields.get('Items').value):          
+                for idx, item in enumerate(receipt.fields.get('Items').value):         
                     item_name = item.value.get('Name')
                     item_entry = {}
                     if item_name:
