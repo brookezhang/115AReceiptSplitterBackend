@@ -83,7 +83,7 @@ class ReceiptOcr:
         return item_list
     
     # gets receipt image data and parses it 
-    def get_ocr(self, img_str):
+    def do_ocr(self, img_str):
         form_recognizer_client = self.get_credentials()
         receipt = self.get_receipt(img_str) # make b64 string into img file
         items_l = self.parse_receipt(receipt, form_recognizer_client) # run azure api over receipt and return item list
