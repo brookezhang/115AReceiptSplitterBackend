@@ -27,6 +27,11 @@ class ReceiptOcr:
         with open("./receipt_pic.jpeg", "rb") as fd:
             receipt = fd.read()
             return receipt
+    def create_item(self, name, value):
+        entry = {}
+        entry['item_name'] = name
+        entry['price'] = value
+        return entry
 
     # parse_receipt(receipt, form_recognizer_client): runs azure recognizer on receipt image 
     # input: read receipt image file object, form recognizer client object
@@ -58,28 +63,16 @@ class ReceiptOcr:
 
             subtotal = receipt.fields.get('Subtotal')
             if subtotal:
-                subtotal_entry = {}
-                subtotal_entry['item_name'] = 'subtotal'
-                subtotal_entry['price'] = subtotal.value
-                item_list.append(subtotal_entry)
+                item_list.append(self.create_item('subtotal', subtotal.value))
             tax = receipt.fields.get('tax')
             if tax:
-                tax_entry = {}
-                tax_entry['item_name'] = 'tax'
-                tax_entry['price'] = tax.value
-                item_list.append(tax_entry)
+                item_list.append(self.create_item('tax', tax.value))
             tip = receipt.fields.get('tip')
             if tip:
-                tip_entry = {}
-                tip_entry['item_name'] = 'tip'
-                tip_entry['price'] = tip.value
-                item_list.append(tip_entry)
+                item_list.append(self.create_item('tip', tip.value))
             total = receipt.fields.get('total')
             if total:
-                total_entry = {}
-                total_entry['item_name'] = 'total'
-                total_entry['price'] = total.value
-                item_list.append(total_entry)
+                item_list.append(self.create_item('total', total.value))
         return item_list
     
     # gets receipt image data and parses it 
