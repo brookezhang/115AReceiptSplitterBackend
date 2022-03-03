@@ -40,8 +40,8 @@ class ReceiptOcr:
         item_list = [] # dictionary to hold receipt items and their values
 
         # loop through list to print and add to list
-
-        
+        if not receipts:
+            return 'Error'
         for idx, receipt in enumerate(receipts):
             if not receipt.fields: 
                 return 'Error'
