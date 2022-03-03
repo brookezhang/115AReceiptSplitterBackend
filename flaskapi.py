@@ -12,7 +12,7 @@ def items():
     reciept = request.json
     imgStr = reciept["base64"]
     ocrObj = ReceiptOcr()
-    foundItems = ocrObj.get(imgStr)
+    foundItems = ocrObj.do_ocr(imgStr)
     if foundItems == 'Error':
         return json.dumps("Error"), 400
     else:

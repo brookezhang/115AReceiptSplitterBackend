@@ -3,15 +3,10 @@ import base64
 import os
 from dotenv import load_dotenv
 from flask import Flask, request
-from azure.core.exceptions import ResourceNotFoundError
 from azure.core.credentials import AzureKeyCredential
-from azure.ai.formrecognizer import FormTrainingClient
 from azure.ai.formrecognizer import FormRecognizerClient
 
 class ReceiptOcr:
-    def __init__(self):
-        pass
-
     # sets up credentials for Azure api
     # input: NONE 
     # output: azure api object 
@@ -45,11 +40,13 @@ class ReceiptOcr:
         item_list = [] # dictionary to hold receipt items and their values
 
         # loop through list to print and add to list
+        if not receipts:
+            return 'Error'
         for idx, receipt in enumerate(receipts):
             if not receipt.fields: 
-                return 'error'
+                return 'Error'
             if receipt.fields.get('Items'):
-                for idx, item in enumerate(receipt.fields.get('Items').value):          
+                for idx, item in enumerate(receipt.fields.get('Items').value):         
                     item_name = item.value.get('Name')
                     item_entry = {}
                     if item_name:
@@ -86,7 +83,7 @@ class ReceiptOcr:
         return item_list
     
     # gets receipt image data and parses it 
-    def get(self, img_str):
+    def get_ocr(self, img_str):
         form_recognizer_client = self.get_credentials()
         receipt = self.get_receipt(img_str) # make b64 string into img file
         items_l = self.parse_receipt(receipt, form_recognizer_client) # run azure api over receipt and return item list
