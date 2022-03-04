@@ -1,3 +1,4 @@
+from asyncio.windows_events import NULL
 import json
 import base64
 import os
@@ -54,17 +55,17 @@ class ReceiptOcr:
                     # print("Receipt Items:")
                     for idx, items in enumerate(field.value):
                         entry = {}
-                        print(items)
                         for item_name, item in items.value.items():
-                    
                             if item_name == "Name":
                                 entry['item_name'] = item.value
-                            elif item_name == "TotalPrice":
+                            if item_name == "TotalPrice":
                                 if item.value:
-                                    entry['price'] = item.value
+                                    entry['price'] = item.value  
                                 else:
-                                    continue
-                        item_list.append(entry)
+                                    entry['price'] = -1
+                        if 'price' in entry:
+                            if entry['price'] != -1:
+                                item_list.append(entry)
                 else:
                     if name == "Tax" or name == "Subtotal" or name == "Total" or name == "Tip":
                         ending = {}
