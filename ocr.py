@@ -29,11 +29,11 @@ class ReceiptOcr:
             receipt = fd.read()
             return receipt
 
-    # def create_item(self, name, value):
-    #     entry = {}
-    #     entry['item_name'] = name
-    #     entry['price'] = value
-    #     return entry
+    def create_item(self, name, value):
+        entry = {}
+        entry['item_name'] = name
+        entry['price'] = value
+        return entry
 
     # parse_receipt(receipt, form_recognizer_client): runs azure recognizer on receipt image 
     # input: read receipt image file object, form recognizer client object
@@ -49,31 +49,36 @@ class ReceiptOcr:
         if not receipts:
             return 'Error'
         item_list = [] # dictionary to hold receipt items and their values
-        for receipt in receipts:
-            for name, field in receipt.fields.items():
-                if name == "Items":
-                    # print("Receipt Items:")
-                    for idx, items in enumerate(field.value):
-                        entry = {}
-                        for item_name, item in items.value.items():
-                            if item_name == "Name":
-                                entry['item_name'] = item.value
-                            if item_name == "TotalPrice":
-                                if item.value:
-                                    entry['price'] = item.value  
-                                else:
-                                    entry['price'] = -1
-                        if 'price' in entry:
-                            if entry['price'] != -1:
-                                item_list.append(entry)
-                else:
-                    if name == "Tax" or name == "Subtotal" or name == "Total" or name == "Tip":
-                        ending = {}
-                        ending['item_name'] = name
-                        ending['price'] = field.value
-                        item_list.append(ending)
+
+        for idx, receipt in enumerate(receipts):
+            if not receipt.fields: 
+                return 'Error'
+            if receipt.fields.get('Items'):
+                for idx, item in enumerate(receipt.fields.get('Items').value):         
+                    item_name = item.value.get('Name')
+                    item_entry = {}
+                    if item_name:
+                        item_entry['item_name'] = item_name.value 
+                    item_total_price = item.value.get('TotalPrice')
+                    if item_total_price:
+                        item_entry['price'] = item_total_price.value
+                    if 'price' in item_entry:
+                        item_list.append(item_entry)
+            subtotal = receipt.fields.get('Subtotal')
+            if subtotal:
+                item_list.append(self.create_item('subtotal', subtotal.value))
+            tax = receipt.fields.get('tax')
+            if tax:
+                item_list.append(self.create_item('tax', tax.value))
+            tip = receipt.fields.get('tip')
+            if tip:
+                item_list.append(self.create_item('tip', tip.value))
+            total = receipt.fields.get('total')
+            if total:
+                item_list.append(self.create_item('total', total.value))
+
         return item_list
-    
+
     # gets receipt image data and parses it 
     def get_ocr(self, img_str):
         form_recognizer_client = self.get_credentials()
