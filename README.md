@@ -1,3 +1,7 @@
+Backend: https://github.com/brookezhang/115AReceiptSplitterBackend <br/>
+Documentation: https://drive.google.com/drive/u/2/folders/1QTqF__bsyIr11Gcu4JZSCo2Ajwaxjqv6
+
+
 This API is deployed on https://tabdropbackend.herokuapp.com/.<br/>
 
 Instructions to deploy locally as well:
