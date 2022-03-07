@@ -9,7 +9,7 @@ Instructions to deploy locally as well:
 ```
     API_KEY=<Azure api key>
     ENDPOINT=<Azure api endpoint>
-    ```
+```
 4. IF ON WINDOWS: in console, enter "set FLASK_APP=flaskapi.py".<br/>
 IF ON MAC: in console, enter "export FLASK_APP=flaskapi.py".
 5. in console, enter "flask run". The backend should be running locally.<br/>
