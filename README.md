@@ -3,8 +3,9 @@ This API is deployed on https://tabdropbackend.herokuapp.com/ .
 Instructions to deploy locally as well:
 
 0. Create a file named ".env" with your Azure API information with the format below:
-	API_KEY=<Azure api key>
-	ENDPOINT=<Azure api endpoint>
+API_KEY=<Azure api key>
+ENDPOINT=<Azure api endpoint>
+
 1. Clone the repository.
 2. Create a python virtual environment and activate it.
 3. Enter on the console/terminal, "pip install -r requirements.txt", within the folder with the repository to install all dependencies.
