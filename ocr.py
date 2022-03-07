@@ -64,18 +64,10 @@ class ReceiptOcr:
                     if 'price' in item_entry:
                         item_list.append(item_entry)
             subtotal = receipt.fields.get('Subtotal')
-            if subtotal:
-                item_list.append(self.create_item('subtotal', subtotal.value))
-            tax = receipt.fields.get('tax')
-            if tax:
-                item_list.append(self.create_item('tax', tax.value))
-            tip = receipt.fields.get('tip')
-            if tip:
-                item_list.append(self.create_item('tip', tip.value))
-            total = receipt.fields.get('total')
-            if total:
-                item_list.append(self.create_item('total', total.value))
-
+            if subtotal and subtotal.value:
+                    item_list.append(self.create_item('subtotal', subtotal.value))
+            else:
+                return 'Error'
         return item_list
 
     # gets receipt image data and parses it 
